@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
+  
+    
     <section class="h-100">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -64,11 +66,7 @@
       
                       
 
-                      <div class="form-outline mb-4">
-                        <input type="text" id="phone" class="form-control form-control-lg" />
-                        <label class="form-label" for="phone">Phone</label>
-                      </div>
-      
+                      
                       <div class="form-outline mb-4">
                         <input type="text" id="age" class="form-control form-control-lg" />
                         <label class="form-label" for="age">Age</label>
@@ -100,7 +98,7 @@
       
                       <div class="d-flex justify-content-end pt-3">
                         
-                        <button type="button" class="btn btn-primary btn-lg ms-2">Save</button>
+                        <a href="./index.html" id="display" class="btn btn-primary btn-lg ms-2">Home</a>
                       </div>
       
                     </div>
@@ -116,31 +114,66 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script>
   
-document.getElementById('welcome').innerText="Welcome "+sessionStorage.getItem("email");
-$(function(){
-    $.ajax({
-      url: 'http://localhost:27017/users/profiles',
-      type: 'get',
-      dataType: 'jsonp',
-      jsonp: 'jsonp', 
-      success: function (data) {
-        console.log('success', data);
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        console.log('error', errorThrown);
-      }
-    });
+// $(function(){
+//     $.ajax({
+//       url: 'http://localhost:27017/users/profiles',
+//       type: 'get',
+//       dataType: 'jsonp',
+//       jsonp: 'jsonp', 
+//       success: function (data) {
+//         console.log('success', data);
+//       },
+//       error: function (XMLHttpRequest, textStatus, errorThrown) {
+//         console.log('error', errorThrown);
+//       }
+//     });
 
-        $('#firstname').val("a");
-        $('#lastname').val("a");
+//         $('#firstname').val("a");
+//         $('#lastname').val("a");
+//         $('#phone').val("a");
+//         $('#mothername').val("a");
+//         $('#fathername').val("a");
+//         $('#age').val("a");
+//         $('#dob').val("a");
+//         $('#address').val("a");
+//         $('#pincode').val("a");
+//         $('#course').val("a");
+//       });
+
+
+	
+             
+
+  $.ajax({    //create an ajax request to display.php
+    type: "POST",
+    url: "./php/profile.php",
+    data: {
+            email: sessionStorage.getItem("email"),
+            
+
+          },             
+    dataType: "html",   //expect html to be returned                
+    success: function(response){                
+      console.log(response);    
+        $("#responsecontainer").html(response);
+        const myArray = response.split(",");
+        $('#firstname').val(myArray[1]);
+        $('#lastname').val(myArray[2]);
         $('#phone').val("a");
-        $('#mothername').val("a");
-        $('#fathername').val("a");
-        $('#age').val("a");
-        $('#dob').val("a");
-        $('#address').val("a");
-        $('#pincode').val("a");
-        $('#course').val("a");
-      });
+        $('#mothername').val(myArray[3]);
+        $('#fathername').val(myArray[4]);
+        $('#age').val(myArray[8]);
+        $('#dob').val(myArray[7]);
+        $('#address').val(myArray[5]);
+        $('#pincode').val(myArray[6]);
+        $('#course').val(myArray[9]);
+        console.log(myArray);
+
+        //alert(response);
+    }
+
+});
+
 </script>
+
 </html>
